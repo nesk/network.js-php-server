@@ -1,0 +1,19 @@
+{
+    "name": "network-js/php-server",
+    "description": "A PHP server implementation for Network.js",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johann Pardanaud",
+            "email": "pardanaud.j@gmail.com"
+        }
+    ],
+    "require": {
+        "zendframework/zend-diactoros": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "NetworkJs\\": "src/"
+        }
+    }
+}
