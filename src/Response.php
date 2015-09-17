@@ -11,6 +11,7 @@ class Response extends ZendResponse {
         $headers = array_merge([
             'Access-Control-Allow-Origin' => '*',
             'Connection' => 'close',
+            'Content-Type' => 'text/plain',
         ], $headers);
 
         parent::__construct($body, $status, $headers);
