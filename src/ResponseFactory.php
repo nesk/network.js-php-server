@@ -15,10 +15,10 @@ class ResponseFactory {
         $request = $request ?: ServerRequestFactory::fromGlobals();
         $params = $request->getQueryParams();
 
-        return $this->fromValues(@$params['module'], @intval($params['size']), $maxSize);
+        return self::fromValues(@$params['module'], @intval($params['size']), $maxSize);
     }
 
-    static public function fromValues($moduleName, $size, $maxSize = null)
+    static public function fromValues($moduleName, $size = null, $maxSize = null)
     {
         if (!is_string($moduleName)) {
             throw new InvalidArgumentException('ModuleName must be a string');
@@ -27,11 +27,11 @@ class ResponseFactory {
             throw new InvalidArgumentException("ModuleName must be one of these values: {$moduleNames}");
         }
 
-        if (!is_int($size)) {
-            throw new InvalidArgumentException('Size must be an integer');
+        if ($moduleName === 'download' && !is_int($size)) {
+            throw new InvalidArgumentException('A size in bytes must be provided for the download module');
         }
 
-        if (!is_int($maxSize)) {
+        if ($maxSize !== null && !is_int($maxSize)) {
             throw new InvalidArgumentException('MaxSize must be an integer');
         }
 
