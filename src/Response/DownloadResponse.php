@@ -7,7 +7,7 @@ use NetworkJs\Response;
 
 class DownloadResponse extends Response {
 
-    public function __construct($size, $content = '-', $status = 204, array $headers = [])
+    public function __construct($size, $content = '-', $status = 200, array $headers = [])
     {
         if (!is_int($size)) {
             throw new InvalidArgumentException('Size must be an integer');
@@ -45,12 +45,12 @@ class DownloadResponse extends Response {
         // Provide a base string which will be provided as a response to the client
         $contentLength = mb_strlen($content);
 
-        // Output the string as much as necessary to reach the required size
+        // Write the string to the body as much as necessary to reach the required size
         for ($i = 0 ; $i < intval($size / $contentLength) ; $i++) {
             $body->write($content);
         }
 
-        // If necessary, complete the response to fully reach the required size.
+        // If necessary complete the response to fully reach the required size
         if (($lastBytes = $size % $contentLength) > 0) {
             $body->write(substr($content, 0, $lastBytes));
         }

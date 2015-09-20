@@ -8,10 +8,9 @@ use Zend\Diactoros\ServerRequestFactory;
 
 class ResponseFactory {
 
-    const DEFAULT_MAX_SIZE = 1024 * 1024 * 200;
     const MODULE_NAMES = ['latency', 'upload', 'download'];
 
-    static public function fromRequest(ServerRequestInterface $request = null, $maxSize = self::DEFAULT_MAX_SIZE)
+    static public function fromRequest(ServerRequestInterface $request = null, $maxSize = null)
     {
         $request = $request ?: ServerRequestFactory::fromGlobals();
         $params = $request->getQueryParams();
@@ -19,7 +18,7 @@ class ResponseFactory {
         return $this->fromValues(@$params['module'], @intval($params['size']), $maxSize);
     }
 
-    static public function fromValues($moduleName, $size, $maxSize = self::DEFAULT_MAX_SIZE)
+    static public function fromValues($moduleName, $size, $maxSize = null)
     {
         if (!is_string($moduleName)) {
             throw new InvalidArgumentException('ModuleName must be a string');
@@ -36,11 +35,13 @@ class ResponseFactory {
             throw new InvalidArgumentException('MaxSize must be an integer');
         }
 
-        $responseClass = ucfirst($size <= $maxSize ? $moduleName : 'oversized');
+        $responseClass = ucfirst(($maxSize === null || $size <= $maxSize) ? $moduleName : 'oversized');
         $responseClass = "NetworkJs\Response\\{$responseClass}Response";
 
         if ($responseClass == 'NetworkJs\Response\DownloadResponse') {
             return new $responseClass($size);
+        } else if ($responseClass == 'NetworkJs\Response\OversizedResponse') {
+            return new $responseClass($maxSize);
         } else {
             return new $responseClass;
         }
