@@ -6,17 +6,13 @@ A server implementation written in PHP for Network.js. Available as a standalone
 
 ### As a standalone project
 
-Download the project as a ZIP file and copy it wherever you want on your web server. Then, specify the server URL to the Network.js client:
+[Download an archive](https://github.com/network-js/php-server/archive/master.zip) and extract it wherever you want on your web server. Then, in the client configuration, specify the path to the [index.php](index.php) file:
 
 ```js
 new Network({
     endpoint: 'path/to/the/server/directory/index.php'
 });
 ```
-
-#### Side note for non-Apache users
-
-This server implementation is configured to disable GZIP compression on Apache but not for other web servers. You must disable this feature for the endpoint used by Network.js or the measures will fail.
 
 ### As a library
 
@@ -57,3 +53,7 @@ The returned object is a child instance of the `NetworkJs\Response` class, which
 ```php
 $response->send();
 ```
+
+### Sidenote for non-Apache users
+
+This server implementation is configured to disable GZIP compression when Apache is used but not with other web servers. You __MUST__ disable this feature for the endpoints used by Network.js or the measures will fail!
