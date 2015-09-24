@@ -57,3 +57,7 @@ $response->send();
 ### Sidenote for non-Apache users
 
 This server implementation is configured to disable GZIP compression when Apache is used but not with other web servers. You __MUST__ disable this feature for the endpoints used by Network.js or the measures will fail!
+
+## License
+
+This project is licensed under [the MIT license](LICENSE), check [TLDRLegal for details](https://tldrlegal.com/license/mit-license).
