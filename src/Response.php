@@ -6,6 +6,11 @@ use Zend\Diactoros\Response as ZendResponse;
 
 class Response extends ZendResponse {
 
+    /**
+     * @param string|resource|Psr\Http\Message\StreamInterface $body
+     * @param integer $status
+     * @param array $headers
+     */
     public function __construct($body = 'php://memory', $status = 200, array $headers = [])
     {
         $headers = array_merge([

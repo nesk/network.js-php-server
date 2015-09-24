@@ -7,6 +7,12 @@ use NetworkJs\Response;
 
 class DownloadResponse extends Response {
 
+    /**
+     * @param integer $size
+     * @param string $content
+     * @param integer $status
+     * @param array $headers
+     */
     public function __construct($size, $content = '-', $status = 200, array $headers = [])
     {
         if (!is_int($size)) {
@@ -28,6 +34,9 @@ class DownloadResponse extends Response {
         $this->fillBody($size, $content);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function send()
     {
         // Disable gzip compression on Apache configurations
@@ -38,6 +47,10 @@ class DownloadResponse extends Response {
         parent::send();
     }
 
+    /**
+     * @param integer $size
+     * @param string $content
+     */
     private function fillBody($size, $content)
     {
         $body = $this->getBody();

@@ -10,6 +10,12 @@ class ResponseFactory {
 
     const MODULE_NAMES = ['latency', 'upload', 'download'];
 
+    /**
+     * @param ServerRequestInterface|null $request
+     * @param integer|null $maxSize
+     * @return Response
+     * @throws InvalidArgumentException
+     */
     static public function fromRequest(ServerRequestInterface $request = null, $maxSize = null)
     {
         $request = $request ?: ServerRequestFactory::fromGlobals();
@@ -18,6 +24,13 @@ class ResponseFactory {
         return self::fromValues(@$params['module'], @intval($params['size']), $maxSize);
     }
 
+    /**
+     * @param string $moduleName
+     * @param integer|null $size
+     * @param integer|null $maxSize
+     * @return Response
+     * @throws InvalidArgumentException
+     */
     static public function fromValues($moduleName, $size = null, $maxSize = null)
     {
         if (!is_string($moduleName)) {
